@@ -59,6 +59,29 @@ const hitParade = [
 // Votre code va ici
 let visited = 0;
 
+let newHtml = `<body><div>`;
+newHtml += `<p>Ton cul sur la com</p>`;
+newHtml += `</div></body>`;
+
+function showClassement() {
+	let html = `<!DOCTYPE html>
+	<html lang="fr" dir="ltr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<style>
+			p{color:blue; margin: 16px}
+		</style>
+	</head>
+	<body>`;
+	for (let i = 0; i < hitParade.length; i++) {
+		html += `<p>n°${i + 1} -> ${hitParade[i].title} de ${hitParade[i].artist} </p>`;
+	}
+	html += `</body></html>`;
+	return html;
+}
+
 const server = http.createServer((req, res) => {
 	res.setHeader('content-type', 'text/html;charset=utf8');
 
@@ -69,9 +92,7 @@ const server = http.createServer((req, res) => {
 			break;
 
 		case '/classement':
-			for (let i = 0; i < hitParade.length; i++) {
-				res.write(`<p style="color:blue;margin:16px">n°${i + 1} -> ${hitParade[i].title} de ${hitParade[i].artist} \n </p>`);
-			}
+			res.end(showClassement());
 			break;
 
 		case '/stats':
@@ -82,7 +103,6 @@ const server = http.createServer((req, res) => {
 			res.end('<h1 style="padding:30px; background-color:red;margin:200px auto;border-radius:30px;text-align:center;font-size:80px;color:white;max-width:800px"> Page non trouvée. <br> Réessayez ! </h1>');
 			break;
 	}
-
 });
 
 server.listen(3000);
